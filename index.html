@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Large Greeting Widget</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background-color: transparent;
+      color: #ffffff;
+      font-family: 'Courier New', Courier, monospace;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      border: 2px solid white;
+      padding: 40px 60px;
+      text-align: center;
+      border-radius: 8px;
+      background-color: transparent;
+    }
+
+    .greeting {
+      font-size: 3rem;
+      font-weight: bold;
+    }
+
+    .date {
+      margin-top: 12px;
+      font-size: 1.5rem;
+      text-transform: uppercase;
+    }
+
+    .time {
+      margin-top: 8px;
+      font-size: 1.5rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="greeting" id="greeting">Loading...</div>
+    <div class="date" id="date"></div>
+    <div class="time" id="time"></div>
+  </div>
+
+  <script>
+    function updateWidget() {
+      const now = new Date();
+      const hours = now.getHours();
+      let greeting = "Hello";
+
+      if (hours >= 5 && hours < 12) greeting = "GOOD MORNING";
+      else if (hours >= 12 && hours < 18) greeting = "GOOD AFTERNOON";
+      else greeting = "GOOD EVENING";
+
+      const weekdays = ["SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"];
+      const months = ["JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE", "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"];
+
+      const day = weekdays[now.getDay()];
+      const month = months[now.getMonth()];
+      const date = now.getDate();
+      const year = now.getFullYear();
+
+      const hour = String(now.getHours() % 12 || 12).padStart(2, '0');
+      const minute = String(now.getMinutes()).padStart(2, '0');
+      const second = String(now.getSeconds()).padStart(2, '0');
+      const ampm = now.getHours() >= 12 ? 'PM' : 'AM';
+
+      document.getElementById('greeting').textContent = greeting;
+      document.getElementById('date').textContent = `${day}, ${month} ${date} ${year}`;
+      document.getElementById('time').textContent = `${hour} : ${minute} : ${second} ${ampm}`;
+    }
+
+    updateWidget();
+    setInterval(updateWidget, 1000);
+  </script>
+</body>
+</html>
